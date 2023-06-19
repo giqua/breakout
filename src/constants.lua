@@ -1,0 +1,6 @@
+-- windows size
+WINDOW_WIDTH = 1280
+WINDOW_HEIGHT = 720
+
+V_WIDTH = 432
+V_HEIGTH = 243
