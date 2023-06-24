@@ -11,6 +11,8 @@ function GenerateQuads(atlas, tileWidth, tileHeight)
             sheetCounter = sheetCounter + 1
         end
     end
+
+    return spriteSheet
 end
 
 function table.slice(tbl, first, last, step)
@@ -72,4 +74,8 @@ function GenerateQuadsBalls(atlas)
     end
 
     return quads
+end
+
+function GenerateQuadsBricks(atlas)
+    return table.slice(GenerateQuads(atlas, 32, 16),1 ,21)    
 end

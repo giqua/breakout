@@ -10,6 +10,8 @@ function PlayState:init()
     self.ball.x = V_WIDTH / 2 - 4
     self.ball.y = V_HEIGTH - 42
     self.paused = false
+
+    self.bricks = LevelMaker.createMap()
 end
 
 function PlayState:update(dt)
@@ -36,11 +38,24 @@ function PlayState:update(dt)
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
+
+    for k, brick in pairs(self.bricks) do
+        if brick.inPlay and self.ball:collides(brick) then
+            self.ball.dy = -self.ball.dy
+            brick:hit()
+        end
+    end
 end
 
 function PlayState:render()
     self.paddle:render()
     self.ball:render()
+
+    for k,brick in pairs(self.bricks) do
+        if brick.inPlay then
+            brick:render()
+        end
+    end
     
     if self.paused then
         love.graphics.setFont(gFonts['large'])
