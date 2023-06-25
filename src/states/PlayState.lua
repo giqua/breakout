@@ -17,6 +17,7 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
+    print(self.level)
     if self.paused then
         if love.keyboard.wasPressed('p') then
             self.paused = false
@@ -59,14 +60,29 @@ function PlayState:update(dt)
                 })
         end
     end
-
+    local numInPlay = #self.bricks
     for k, brick in pairs(self.bricks) do
         if brick.inPlay then
             local collision = CollisionManager.processCollision(self.ball, brick, "BRICK")
             if collision then
                 self.score = self.score + 100
             end
+        else
+            numInPlay = numInPlay - 1
         end
+    end
+    if numInPlay == 0 then
+        if self.health < self.maxHealth then
+            self.health = self.health + 1
+        end
+        gStateMachine:change('serve', {
+            paddle = self.paddle,
+            bricks = LevelMaker.createMap(self.level + 1),
+            health = self.health,
+            maxHealth = self.maxHealth,
+            score = self.score,
+            level = self.level + 1
+        })
     end
 
     CollisionManager.processCollision(self.ball, self.ball, "WALL")

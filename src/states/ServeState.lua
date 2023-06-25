@@ -6,6 +6,7 @@ function ServeState:enter(params)
     self.health = params.health
     self.score = params.score
     self.maxHealth = params.maxHealth
+    self.level = params.level
 
     self.ball = Ball()
     self.ball.skin = math.random(7)
@@ -47,6 +48,7 @@ function ServeState:render()
     renderHealth(self.health, self.maxHealth)
 
     love.graphics.setFont(gFonts['medium'])
+    love.graphics.printf('Level ' .. tostring(self.level), 0, V_HEIGTH / 2 - 20,V_WIDTH,'center')
     love.graphics.printf('Press Enter to serve!', 0, V_HEIGTH / 2,V_WIDTH,'center')
     
 end

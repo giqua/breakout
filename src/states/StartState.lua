@@ -17,7 +17,8 @@ function StartState:update(dt)
                 bricks = LevelMaker.createMap(1),
                 health = MAX_HEALTH,
                 score = 0,
-                maxHealth = MAX_HEALTH
+                maxHealth = MAX_HEALTH,
+                level = 1
             })
         end
     end

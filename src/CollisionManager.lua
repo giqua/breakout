@@ -83,5 +83,9 @@ function CollisionManager.processCollision(ball, target, targetType)
             gSounds['wall-hit']:play()
         end
     end
+    if overlap then
+        ball.dx = ball.dx * 1.002
+        ball.dy = ball.dy * 1.002
+    end
     return overlap
 end
