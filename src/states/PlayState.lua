@@ -13,6 +13,7 @@ function PlayState:enter(params)
     self.score = params.score
     self.maxHealth = params.maxHealth
     self.health = params.health
+    self.level = params.level
 end
 
 function PlayState:update(dt)
@@ -53,7 +54,8 @@ function PlayState:update(dt)
                     bricks = self.bricks,
                     health = self.health,
                     maxHealth = self.maxHealth,
-                    score = self.score
+                    score = self.score,
+                    level = self.level
                 })
         end
     end

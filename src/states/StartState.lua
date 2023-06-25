@@ -14,7 +14,7 @@ function StartState:update(dt)
         if highlighted == 1 then
             gStateMachine:change('serve',{
                 paddle = Paddle(1),
-                bricks = LevelMaker.createMap(),
+                bricks = LevelMaker.createMap(1),
                 health = MAX_HEALTH,
                 score = 0,
                 maxHealth = MAX_HEALTH

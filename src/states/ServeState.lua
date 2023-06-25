@@ -25,7 +25,8 @@ function ServeState:update(dt)
             health = self.health,
             score = self.score,
             ball = self.ball,
-            maxHealth = self.maxHealth
+            maxHealth = self.maxHealth,
+            level = self.level
         })
     end
 
