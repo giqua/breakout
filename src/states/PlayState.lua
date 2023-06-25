@@ -17,7 +17,6 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    print(self.level)
     if self.paused then
         if love.keyboard.wasPressed('p') then
             self.paused = false
@@ -95,6 +94,7 @@ function PlayState:render()
     for k,brick in pairs(self.bricks) do
         if brick.inPlay then
             brick:render()
+            brick:renderParticles()
         end
     end
 
