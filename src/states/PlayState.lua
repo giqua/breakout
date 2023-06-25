@@ -65,6 +65,7 @@ function PlayState:update(dt)
     local numInPlay = #self.bricks
     for k, brick in pairs(self.bricks) do
         if brick.inPlay then
+            brick:update(dt)
             local collision = CollisionManager.processCollision(self.ball, brick, "BRICK")
             if collision then
                 self.score = self.score + 100
@@ -99,7 +100,7 @@ function PlayState:render()
     for k,brick in pairs(self.bricks) do
         if brick.inPlay then
             brick:render()
-            -- brick:renderParticles()
+            brick:renderParticles()
         end
     end
 
