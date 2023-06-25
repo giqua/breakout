@@ -1,17 +1,18 @@
 PlayState = Class{__includes = BaseState}
 
-function PlayState:init()
-    self.paddle = Paddle()
-    self.ball = Ball(1)
+function PlayState:enter(params)
+    self.paddle = params.paddle
+    self.ball = params.ball
 
     self.ball.dx = math.random(-200, 200)
     self.ball.dy = math.random(-50,-60)
 
-    self.ball.x = V_WIDTH / 2 - 4
-    self.ball.y = V_HEIGTH - 42
     self.paused = false
 
-    self.bricks = LevelMaker.createMap()
+    self.bricks = params.bricks
+    self.score = params.score
+    self.maxHealth = params.maxHealth
+    self.health = params.health
 end
 
 function PlayState:update(dt)
@@ -38,9 +39,31 @@ function PlayState:update(dt)
         love.event.quit()
     end
 
+    if self.ball.y >= V_HEIGTH then
+        self.health = self.health - 1
+        gSounds['hurt']:play()
+
+        if self.health == 0 then
+            gStateMachine:change('game-over',{
+                score = self.score
+            })
+            else
+                gStateMachine:change('serve',{
+                    paddle = self.paddle,
+                    bricks = self.bricks,
+                    health = self.health,
+                    maxHealth = self.maxHealth,
+                    score = self.score
+                })
+        end
+    end
+
     for k, brick in pairs(self.bricks) do
         if brick.inPlay then
             CollisionManager.processCollision(self.ball, brick, "BRICK")
+            if not brick.inPlay then
+                self.score = self.score + 100
+            end
         end
     end
 
@@ -56,6 +79,9 @@ function PlayState:render()
             brick:render()
         end
     end
+
+    renderScore(self.score)
+    renderHealth(self.health, self.maxHealth)
     
     if self.paused then
         love.graphics.setFont(gFonts['large'])
