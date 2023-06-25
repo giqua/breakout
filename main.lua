@@ -24,6 +24,7 @@ function love.load()
     }
 
     gFrames = {
+        ['arrows'] = GenerateQuads(gTextures['arrows'], 24, 24),
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
         ['balls'] = GenerateQuadsBalls(gTextures['main']),
         ['bricks'] = GenerateQuadsBricks(gTextures['main']),
@@ -64,7 +65,8 @@ function love.load()
         ['game-over'] = function () return GameOverState() end,
         ['level-completed'] = function () return LevelCompleteState() end,
         ['high-scores'] = function () return HighScoreState() end,
-        ['enter-high-score'] = function() return EnterHighScoreState() end
+        ['enter-high-score'] = function() return EnterHighScoreState() end,
+        ['select-paddle'] = function () return SelectPaddleState() end
     }
 
     gStateMachine:change('start',{
@@ -125,7 +127,6 @@ function loadHighScores()
     end
 
     local name = true
-    local currentName = nil
     local counter = 1
 
     local scores = {}
