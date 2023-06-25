@@ -62,8 +62,8 @@ function PlayState:update(dt)
 
     for k, brick in pairs(self.bricks) do
         if brick.inPlay then
-            CollisionManager.processCollision(self.ball, brick, "BRICK")
-            if not brick.inPlay then
+            local collision = CollisionManager.processCollision(self.ball, brick, "BRICK")
+            if collision then
                 self.score = self.score + 100
             end
         end

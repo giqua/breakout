@@ -83,4 +83,5 @@ function CollisionManager.processCollision(ball, target, targetType)
             gSounds['wall-hit']:play()
         end
     end
+    return overlap
 end
