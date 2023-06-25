@@ -84,8 +84,8 @@ function CollisionManager.processCollision(ball, target, targetType)
         end
     end
     if overlap then
-        ball.dx = ball.dx * 1.002
-        ball.dy = ball.dy * 1.002
+        ball.dx = ball.dx * 1.02
+        ball.dy = ball.dy * 1.02
     end
     return overlap
 end

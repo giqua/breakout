@@ -1,6 +1,6 @@
-ServeState = Class{__includes = BaseState}
+LevelCompleteState = Class{__includes = BaseState}
 
-function ServeState:enter(params)
+function LevelCompleteState:enter(params)
     self.paddle = params.paddle
     self.bricks = params.bricks
     self.health = params.health
@@ -8,11 +8,10 @@ function ServeState:enter(params)
     self.maxHealth = params.maxHealth
     self.level = params.level
 
-    self.ball = Ball()
-    self.ball.skin = math.random(7)
+    self.ball = params.ball
 end
 
-function ServeState:update(dt)
+function LevelCompleteState:update(dt)
 
     self.paddle:update(dt)
 
@@ -20,14 +19,14 @@ function ServeState:update(dt)
     self.ball.y = self.paddle.y - 8
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('play', {
+        gStateMachine:change('serve', {
             paddle = self.paddle,
-            bricks = self.bricks,
+            bricks = LevelMaker.createMap(self.level + 1),
             health = self.health,
             score = self.score,
             ball = self.ball,
             maxHealth = self.maxHealth,
-            level = self.level
+            level = self.level + 1
         })
     end
 
@@ -36,7 +35,7 @@ function ServeState:update(dt)
     end
 end
 
-function ServeState:render()
+function LevelCompleteState:render()
     self.paddle:render()
     self.ball:render()
 
@@ -48,7 +47,7 @@ function ServeState:render()
     renderHealth(self.health, self.maxHealth)
 
     love.graphics.setFont(gFonts['large'])
-    love.graphics.printf('Level ' .. tostring(self.level), 0, V_HEIGTH / 2 - 30,V_WIDTH,'center')
+    love.graphics.printf('Level ' .. tostring(self.level) .. ' completed !', 0, V_HEIGTH / 2 - 30,V_WIDTH,'center')
     love.graphics.setFont(gFonts['medium'])
     love.graphics.printf('Press Enter to serve!', 0, V_HEIGTH / 2,V_WIDTH,'center')
     

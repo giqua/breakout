@@ -74,13 +74,14 @@ function PlayState:update(dt)
         if self.health < self.maxHealth then
             self.health = self.health + 1
         end
-        gStateMachine:change('serve', {
+        gStateMachine:change('level-completed', {
             paddle = self.paddle,
-            bricks = LevelMaker.createMap(self.level + 1),
+            bricks = self.bricks,
             health = self.health,
             maxHealth = self.maxHealth,
             score = self.score,
-            level = self.level + 1
+            level = self.level,
+            ball = self.ball
         })
     end
 
@@ -94,7 +95,7 @@ function PlayState:render()
     for k,brick in pairs(self.bricks) do
         if brick.inPlay then
             brick:render()
-            brick:renderParticles()
+            -- brick:renderParticles()
         end
     end
 
