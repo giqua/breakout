@@ -1,6 +1,7 @@
 LevelCompleteState = Class{__includes = BaseState}
 
 function LevelCompleteState:enter(params)
+    gSounds['victory']:play()
     self.paddle = params.paddle
     self.bricks = params.bricks
     self.health = params.health
@@ -9,6 +10,7 @@ function LevelCompleteState:enter(params)
     self.level = params.level
 
     self.ball = params.ball
+    self.highScores = params.highScores
 end
 
 function LevelCompleteState:update(dt)
@@ -26,7 +28,8 @@ function LevelCompleteState:update(dt)
             score = self.score,
             ball = self.ball,
             maxHealth = self.maxHealth,
-            level = self.level + 1
+            level = self.level + 1,
+            highScores = self.highScores
         })
     end
 

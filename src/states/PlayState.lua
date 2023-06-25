@@ -14,6 +14,7 @@ function PlayState:enter(params)
     self.maxHealth = params.maxHealth
     self.health = params.health
     self.level = params.level
+    self.highScores = params.highScores
 end
 
 function PlayState:update(dt)
@@ -46,17 +47,19 @@ function PlayState:update(dt)
 
         if self.health == 0 then
             gStateMachine:change('game-over',{
-                score = self.score
+                score = self.score,
+                highScores = self.highScores
             })
-            else
-                gStateMachine:change('serve',{
-                    paddle = self.paddle,
-                    bricks = self.bricks,
-                    health = self.health,
-                    maxHealth = self.maxHealth,
-                    score = self.score,
-                    level = self.level
-                })
+        else
+            gStateMachine:change('serve',{
+                paddle = self.paddle,
+                bricks = self.bricks,
+                health = self.health,
+                maxHealth = self.maxHealth,
+                score = self.score,
+                level = self.level,
+                highScores = self.highScores
+            })
         end
     end
     local numInPlay = #self.bricks
@@ -81,7 +84,8 @@ function PlayState:update(dt)
             maxHealth = self.maxHealth,
             score = self.score,
             level = self.level,
-            ball = self.ball
+            ball = self.ball,
+            highScores = self.highScores
         })
     end
 

@@ -10,6 +10,7 @@ function ServeState:enter(params)
 
     self.ball = Ball()
     self.ball.skin = math.random(7)
+    self.highScores = params.highScores
 end
 
 function ServeState:update(dt)
@@ -27,7 +28,8 @@ function ServeState:update(dt)
             score = self.score,
             ball = self.ball,
             maxHealth = self.maxHealth,
-            level = self.level
+            level = self.level,
+            highScores = self.highScores
         })
     end
 
