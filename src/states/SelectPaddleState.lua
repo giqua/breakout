@@ -40,7 +40,9 @@ function SelectPaddleState:update(dt)
     end
 
     if love.keyboard.wasPressed('escape') then
-        love.event.quit()
+        gStateMachine:change('start', {
+            highScores = self.highScores
+        })
     end
 end
 
