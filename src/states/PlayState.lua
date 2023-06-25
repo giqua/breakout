@@ -31,20 +31,20 @@ function PlayState:update(dt)
     self.paddle:update(dt)
     self.ball:update(dt)
 
-    if self.ball:collides(self.paddle) then
-        self.ball.dy = -self.ball.dy
-        gSounds['paddle-hit']:play()
-    end
+    CollisionManager.processCollision(self.ball, self.paddle, "PADDLE")
+
+    
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
 
     for k, brick in pairs(self.bricks) do
-        if brick.inPlay and self.ball:collides(brick) then
-            self.ball.dy = -self.ball.dy
-            brick:hit()
+        if brick.inPlay then
+            CollisionManager.processCollision(self.ball, brick, "BRICK")
         end
     end
+
+    CollisionManager.processCollision(self.ball, self.ball, "WALL")
 end
 
 function PlayState:render()

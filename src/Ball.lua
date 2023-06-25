@@ -11,15 +11,22 @@ function Ball:init(skin)
 
 end
 
-function Ball:collides(target)
-    
-    if self.x > target.x + target.width or target.x > self.x + self.width then
-        return false
+function Ball:rebound(shift_ball_x,shift_ball_y)
+    local min_shift = math.min(math.abs(shift_ball_x),math.abs(shift_ball_y))
+    if math.abs(shift_ball_x)== min_shift then
+        shift_ball_y = 0
+    else
+        shift_ball_x = 0
     end
-    if self.y > target.y + target.height or target.y > self.y + self.height then
-        return false
+    self.x = self.x + shift_ball_x
+    self.y = self.y + shift_ball_y
+
+    if shift_ball_x ~= 0 then
+        self.dx = -self.dx
     end
-    return true    
+    if shift_ball_y ~= 0 then
+        self.dy = -self.dy
+    end
 end
 
 function Ball:reset()
@@ -32,24 +39,6 @@ end
 function Ball:update(dt)
     self.x = self.x + self.dx * dt
     self.y = self.y + self.dy * dt 
-    
-    if self.x <= 0 then
-        self.x = 0
-        self.dx = -self.dx
-        gSounds['wall-hit']:play()
-    end
-
-    if self.x >= V_WIDTH - 8 then
-        self.x = V_WIDTH - 8
-        self.dx = -self.dx
-        gSounds['wall-hit']:play()
-    end
-
-    if self.y <= 0 then
-        self.y = 0
-        self.dy = -self.dy
-        gSounds['wall-hit']:play()
-    end
 end
 
 function Ball:render()
